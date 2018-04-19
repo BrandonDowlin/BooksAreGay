@@ -1,0 +1,61 @@
+@(customer: models.users.Customer, order: models.shopping.ShopOrder)
+
+
+@import play.api.Play.current
+@import models.shopping._
+@import models.books._
+
+<!-- Pass page title and user on to main -->
+@main("Order Confirmation", customer) {
+
+
+<div class="row">
+
+	<div class="col-md-12">
+		@if(flash.containsKey("success")) {
+			  <div class="alert alert-success">
+			      @flash.get("success")
+			  </div>
+		} 
+        <h1>Your Order is On The Way: </h1>
+		<table class="table table-bordered table-hover table-condensed">
+			<thead>
+			<!-- The header row-->
+			<tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Description</th>
+                <th>Publisher</th>
+				<th>Item Price</th>
+				<th>Quantity</th>
+                <th>Total</th>
+			</tr>
+			</thead>
+			<tbody>
+                @if(order != null) {
+                    <!-- Start of For loop - For each p in books add a row -->
+                    @for(i <- order.getItems) {
+                    <tr>
+                        <td>@i.getBook.getTitle</td>
+                        <td>@i.getBook.getAuthor</td>
+                        <td>@i.getBook.getDescription</td>
+                        <td>@i.getBook.getPublisher</td>
+                        <td>&euro; @("%.2f".format(i.getPrice))</td>
+                        <td>@i.getQuantity()</td>
+                        <td>&euro; @("%.2f".format(i.getItemTotal))</td>
+                    </tr>
+                    }<!-- End of For loop -->
+              }
+			</tbody>
+		</table>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-center"><strong>Delivery Cost: &euro;2</strong></p>
+                <p class="text-right"><strong>Order Total: &euro; @("%.2f".format(order.getOrderTotal+2))</strong></p>
+            </div>  
+            <a href="@routes.BookCtrl.listBooks()"  class="btn btn-default btn-xs"><span class="glyphicon glyphicon-shopping-cart" ></span>Continue Shopping</a>
+  
+        </div>
+        </div>
+</div>
+}

@@ -1,0 +1,44 @@
+@(customer: models.users.Customer, env: play.api.Environment)
+
+
+@import play.api.Play.current
+@import models.shopping._
+@import models.books._
+
+@main("Wishlist", customer) {
+    <div class="row">
+
+        <div class="col-md-12">
+            @if(flash.containsKey("success")) {
+                <div class="alert alert-success">
+                    @flash.get("success")
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+        <h2>My Wishlist</h2>
+
+        @for(b<-customer.getWishlist.getWishlistItems) {
+            <div id="book-group">
+            @if(env.resource("public/images/bookImages/thumbnails/" + b.getId + ".jpg").isDefined) {
+              <td><img src="/assets/images/bookImages/thumbnails/@(b.getId + ".jpg")"/></td>
+          } else {
+              <td><img src="/assets/images/bookImages/thumbnails/noImage.jpg"/></td>
+          }
+          <h4 id="bookName">@b.getTitle</h4>
+          <p>
+            by @b.getAuthor.getFname @b.getAuthor.getLname
+          </p>
+          <h5 id="price">€@("%.2f".format(b.getPrice))</h5>
+          <a href="@routes.ShoppingCtrl.addToBasket(b.getId)"  class="btn btn-sm btn-primary">Add to basket</a>
+          <a href="@routes.BookCtrl.removeFromWishlist(b.getId)"  class="btn btn-sm btn-danger">Remove from wishlist</a>
+
+           
+         </div>
+        }
+
+    </div>
+    <div class="col-sm-3"></div>
+}

@@ -1,0 +1,56 @@
+@import models.users.User
+@import models.users.ProcessPay
+@(processpayForm: Form[models.users.ProcessPay], user: models.users.User)
+@import helper._
+
+@main("ProcessPay", user) {
+    <p class="lead">ProcessPayment</p>
+    <div class="col-xs-5">
+        <h3>Process Payment</h3>
+        @if(processpayForm.hasGlobalErrors) {
+            <p class="alert alert-warning">
+                @processpayForm.globalError.message;
+            </p>
+        }
+        @if(flash.containsKey("error")) {
+            <p class="alert alert-warning">
+                @flash.get("paymentRequired")
+            </p>
+        }
+
+
+        @helper.form(action = controllers.routes.ProcessPayCtrl.processpaySubmit()) {
+            @CSRF.formField
+
+            <div class="form-group">
+                @inputText(processpayForm("cardholderName"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "Name on Card")
+            </div>
+            <div class="form-group">
+                @inputText(processpayForm("cardNo"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "Card Number")
+            </div>
+            <div class="form-group">
+                @inputText(processpayForm("date"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "Expiry Date")
+            </div>
+            <div class="form-group">
+                @inputText(processpayForm("cCVNum"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "CCV Number")
+            </div>
+            <div class="form-group">
+                @inputText(processpayForm("cardType"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "Card Type")
+            </div>
+            
+
+            <div class="col-md-6">
+                <p class="text-right">
+                    <a href="@routes.ShoppingCtrl.placeOrder()" class="btn btn-success btn-sm">
+                    <span class="glyphicon glyphicon-euro"></span> Place Order</a>
+                    
+                </p>
+            </div>
+        }
+    </div>
+}

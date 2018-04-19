@@ -1,0 +1,9 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\conf\application.conf,C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\target\scala-2.11\classes\application.conf)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\conf\evolutions,C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\target\scala-2.11\classes\evolutions)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\conf\logback.xml,C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\target\scala-2.11\classes\logback.xml)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\conf\routes,C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\target\scala-2.11\classes\routes)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\conf\evolutions\default,C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\target\scala-2.11\classes\evolutions\default)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\conf\evolutions\default\1.sql,C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\target\scala-2.11\classes\evolutions\default\1.sql)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\conf\evolutions\default\2.sql,C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\target\scala-2.11\classes\evolutions\default\2.sql)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\conf\evolutions\default\3.sql,C:\Users\brand\Desktop\BookishUniverse\BookishUniverse-master\target\scala-2.11\classes\evolutions\default\3.sql)[0m

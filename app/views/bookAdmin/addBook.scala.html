@@ -1,0 +1,60 @@
+@import models.books._
+@import models.books.Book
+@import models.users.User
+@(bookForm: Form[Book], user: User)
+@import helper._
+
+@main("Add Book", user) {
+
+    @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+            @flash.get("success")
+        </div>
+    }
+    @if(flash.containsKey("failure")) {
+        <div class="alert alert-success">
+            @flash.get("failure")
+        </div>
+    } 
+    <!-- // supposed to give out the message that the add of the book was successfull -->
+
+    <!-- // Need to fix the table of the book for the admin everything is moved one to the side. the id is in title the image is in id ets. 
+    also when adding new book completely it moves everything to the opposite side so delete button into update grid and update into price ets. -->
+
+    <p class="lead"> Add a new Book</p>
+    @form(action=routes.AdminBookCtrl.addBookSubmit(), 'class -> "form-horizontal", 'role -> "form",'enctype -> "multipart/form-data") {
+        @* CSRF attack prevention *@
+        @CSRF.formField
+        @inputText(bookForm("title"), '_label -> "Title", 'class -> "form-control")
+        @inputText(bookForm("description"), '_label -> "Description", 'class -> "form-control")
+        @for((value, name) <- Genre.options) {
+            <input type="checkbox" name="genSelect[]" value="@value"
+            
+            />@name<br>        
+        }  
+        @select(
+            bookForm("author.id"),
+            options(Author.options), '_label -> "Author", '_default -> "Choose an author",
+            '_showConstraints -> false, 'class -> "form-control"
+
+        )
+        @select(
+            bookForm("publisher.id"),
+            options(Publisher.options), '_label -> "Publisher", '_default -> "Choose a publisher",
+            '_showConstraints -> false, 'class -> "form-control"
+
+        )
+    @inputText(bookForm("stock"), '_label -> "Stock", 'class -> "form-control")
+    @inputText(bookForm("price"), '_label -> "Price", 'class -> "form-control")
+
+        <label>Image Upload</label>
+        <input class="btn-sm btn-default" type="file" name="upload">
+        <br><br>
+        <div class="actions">
+            <input type="submit" value="Add Book" class="btn btn-primary">
+            <a href="@routes.BookCtrl.listBooks(0)">
+                <button type="button" class="btn btn-warning">Cancel</button>
+            </a>
+        </div>
+    }
+}

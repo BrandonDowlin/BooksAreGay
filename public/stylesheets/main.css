@@ -1,0 +1,91 @@
+.numeric {
+    text-align: right;
+}
+
+#book-group img{
+    height: 120px;
+    width: auto;
+}
+
+#book-group {
+    display: inline-block;
+    width: 15em;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+    padding-bottom: 5em;
+}
+
+#details {
+    float: right;
+}
+
+#order {
+    float: left;
+}
+
+.navbar {
+    font-family: Montserrat, sans-serif;
+    margin-bottom: 0;
+    background-color: #0054e8;
+    border: 0;
+    font-size: 11px !important;
+    letter-spacing: 4px;
+    opacity: 0.9;
+}
+.navbar li a, .navbar .navbar-brand { 
+    color: #d5d5d5 !important;
+}
+.navbar-nav li a:hover {
+    color: grey !important;
+}
+.navbar-nav li.active a {
+    color: darkblue !important;
+    background-color: #0054e8 !important;
+}
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+}
+.footer-wrap {
+    color: white;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    font-size: 1.4rem;
+}
+.footer-wrap .footer-left-content {
+    float: left;
+    padding: 0 1.5rem;
+}
+.footer-wrap .footer-right-content {
+    float: right;
+    padding: 0 1.5rem;
+}
+#headerImage img{
+    height: 150px;
+}
+.nav-pills {
+    float: right;
+    padding-top: 7em;
+}
+
+.bookDetails {
+    padding-top: 5em;
+}
+
+.bookDetails p{
+    padding-left: 10em;
+}
+
+.bookDetails h4{
+    padding-left: 8em;
+}
+.bookDetails h2{
+    padding-left: 5em;
+}
+.book-item img {
+    float: left;
+}
+
+.book-price {
+    float: right;
+    padding-right: 6em;
+}

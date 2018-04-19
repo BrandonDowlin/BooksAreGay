@@ -1,0 +1,30 @@
+@import models.users.User
+@(u: models.users.User)
+
+@main("My Account",u) {
+    <div class="col-sm-2"></div>
+    <div class="col-sm-3">
+        <h2>My Account</h2>
+<div id="details">
+<h4><b>Details</b></h4>
+@if(u != null) {
+    <p>
+    <b>Name:</b> @u.getName <br>
+    <b>Email:</b> @u.getEmail <br>
+    <a href="@routes.HomeController.updateCustomer(u.getEmail)">Edit your details</a>
+    </p>
+    }
+    </div>
+    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-3">
+    <div id="order">
+        <!-- <h4><b>Order</b></h4>
+        <p><b><a href="@controllers.routes.ShoppingCtrl.viewOrders()">View Orders</a> --> <br> 
+            <br><br><h4><b>Order</b></h4>
+                    <a href="/viewOrders">View Orders</a><br>    
+    </div>
+</div>
+</div>
+    <div class="col-sm-3"></div>
+}

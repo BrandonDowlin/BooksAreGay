@@ -1,0 +1,60 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET		/   						        controllers.BookCtrl.index()
+
+# Show a list of books - note optional parameter
+
+GET     /Home                               controllers.BookCtrl.listBooks(gen:Long ?= 0, filter?="")
+GET     /bookDetails/:id                    controllers.BookCtrl.bookDetails(id:Long)
+
+# Login form
+GET		/login						        controllers.security.LoginCtrl.login()
+POST	/login						        controllers.security.LoginCtrl.loginSubmit()
+GET     /logout                             controllers.security.LoginCtrl.logout()
+
+# Register form
+GET     /usersPage                          controllers.HomeController.usersPage
+GET     /addUser                            controllers.HomeController.addUser
+GET     /delUser/:id                        controllers.HomeController.deleteUser(id: String)
+POST    /addUserSubmit                      controllers.HomeController.addUserSubmit
+GET     /updateUser/:id                     controllers.HomeController.updateUser(id: String)
+POST    /updateUserSubmit/:id               controllers.HomeController.updateUserSubmit(id: String)
+GET     /updateCustomer/:id                 controllers.HomeController.updateCustomer(id: String)
+POST    /updateCustomerSubmit/:id           controllers.HomeController.updateCustomerSubmit(id: String)
+
+# Shopping
+GET     /showBasket                         controllers.ShoppingCtrl.showBasket()
+GET     /addToBasket/:id                    controllers.ShoppingCtrl.addToBasket(id: Long)
+GET     /addOne/:itemId                     controllers.ShoppingCtrl.addOne(itemId: Long, pid: Long)
+GET     /removeOne/:itemId                  controllers.ShoppingCtrl.removeOne(itemId: Long)
+GET     /emptyBasket                        controllers.ShoppingCtrl.emptyBasket()
+GET     /placeOrder                         controllers.ShoppingCtrl.placeOrder()
+GET     /viewOrder/:id                      controllers.ShoppingCtrl.viewOrder(id: Long)
+GET     /viewOrders                         controllers.ShoppingCtrl.viewOrders
+GET     /cancelOrder/:id                    controllers.ShoppingCtrl.cancelOrder(id: Long)
+GET     /payment                            controllers.PaymentCtrl.payment  
+POST    /paymentSubmit                      controllers.PaymentCtrl.paymentSubmit
+
+GET     /myaccount                          controllers.HomeController.myAccount
+GET     /wishlist                           controllers.BookCtrl.showWishlist()
+GET     /addToWishlist/:id                  controllers.BookCtrl.addToWishlist(id: Long)
+GET     /removeFromWishlist/id              controllers.BookCtrl.removeFromWishlist(id: Long)
+
+GET     /processpay                         controllers.ProcessPayCtrl.processpay  
+POST    /processpaySubmit                   controllers.ProcessPayCtrl.processpaySubmit
+
+# Book Administration
+
+GET		/Admin/addBook					    controllers.AdminBookCtrl.addBook()
+POST	/Admin/addBookSubmit				controllers.AdminBookCtrl.addBookSubmit()
+
+GET		/Admin/updateBook/:id			    controllers.AdminBookCtrl.updateBook(id:Long)
+POST	/Admin/updateBookSubmit/:id		    controllers.AdminBookCtrl.updateBookSubmit(id:Long)
+
+GET     /Admin/deleteBook/:id               controllers.AdminBookCtrl.deleteBook(id:Long)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

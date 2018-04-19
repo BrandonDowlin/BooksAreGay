@@ -1,0 +1,50 @@
+@import models.books.Book
+@import models.books.Genre
+@import models.users.User
+@import models.books.Author
+@import models.books.Publisher
+@(id: Long, updateBookForm: Form[Book], user: User)
+@import helper._
+@main("Update book", user){
+<p class="lead"> Update Book</p>
+
+@form(action=routes.AdminBookCtrl.updateBookSubmit(id), 'class -> "form-horizontal", 
+'role -> "form",'enctype -> "multipart/form-data") {
+    @* CSRF attack prevention *@
+    @CSRF.formField
+    @inputText(updateBookForm("title"), '_label -> "Title", 'class -> "form-control")
+    @inputText(updateBookForm("description"), '_label -> "Description", 'class -> "form-control")
+        @for((value, name) <- Genre.options) {
+            <input type="checkbox" name="genSelect[]" value="@value"
+            @if(Genre.inGenre(value.toLong, id)) {
+                checked
+            }
+            />@name<br>        
+        }  
+        @select(
+            updateBookForm("author.id"),
+            options(Author.options), '_label -> "Author", '_default -> "Choose an author",
+            '_showConstraints -> false, 'class -> "form-control"
+
+        )
+        @select(
+            updateBookForm("publisher.id"),
+            options(Publisher.options), '_label -> "Publisher", '_default -> "Choose a publisher",
+            '_showConstraints -> false, 'class -> "form-control"
+
+        )
+    @inputText(updateBookForm("stock"), '_label -> "Stock", 'class -> "form-control")
+    @inputText(updateBookForm("price"), '_label -> "Price", 'class -> "form-control")
+    
+    <label>Image </label>
+    <input class = "btn-sm btn-default" type="file" name="upload">
+    <br><br>
+
+    <div class="actions">
+        <input type="submit" value="Update Book" class="btn btn-primary">
+        <a href="@routes.BookCtrl.listBooks(0)">
+            <button type="button" class="btn btn-warning">Cancel</button>
+        </a>
+    </div>
+ }
+}

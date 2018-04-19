@@ -1,0 +1,90 @@
+@(customer: models.users.Customer)
+
+
+@import play.api.Play.current
+@import models.shopping._
+@import models.books._
+
+<!-- Pass page title and user on to main -->
+@main("Shopping Basket", customer) {
+    <div class="row">
+
+        <div class="col-md-12">
+            @if(flash.containsKey("success")) {
+                <div class="alert alert-success">
+                    @flash.get("success")
+                </div>
+            }
+            <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                <!-- The header row-->
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Description</th>
+                    <th>Item Price</th>
+                    <th>Total</th>
+                    <th>Quantity</th>
+                    <th>dec.</th>
+                    <th>inc.</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @if(customer.getBasket() != null) {
+                        <!-- Start of For loop - For each p in bookss add a row -->
+                        @for(i <- customer.getBasket().getBasketItems()) {
+                        <tr>
+                            <td>@i.getBook.getTitle</td>
+                            <td>@i.getBook.getAuthor</td>
+                            <td>@i.getBook.getDescription()</td>
+                            <td>&euro; @("%.2f".format(i.getPrice))</td>
+                            <td>&euro; @("%.2f".format(i.getItemTotal))</td>
+                            <td>@i.getQuantity()</td>
+                            <td><a href="@routes.ShoppingCtrl.removeOne(i.getId)"><span class="glyphicon glyphicon-minus-sign"></span></a></td>
+                            <td><a href="@routes.ShoppingCtrl.addOne(i.getId,i.getBook.getId())"><span class="glyphicon glyphicon-plus-sign"></span></a></td>
+                        </tr>
+                        }
+                  }
+                </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="text-center"><strong>Basket Total: &euro; @("%.2f".format(customer.getBasket.getBasketTotal))</strong></p>
+                        <p class="text-center"><strong>Delivery Cost: &euro;2</strong></p>
+                        <p class="text-center"><strong>Total Cost: &euro;@("%.2f".format(customer.getBasket.getBasketTotal+2))</strong></p>                        
+                    </div>  
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="text-right">
+                            <a href="@routes.ShoppingCtrl.emptyBasket()" class="btn btn-danger btn-sm" onclick="return confirmDel();">
+                            <span class="glyphicon glyphicon-trash"></span> Empty Basket</a>
+                        </p>
+                    </div>  
+                    <div class="col-md-6">
+                        <p class="text-right">
+                            <a href="@routes.ShoppingCtrl.placeOrder()" class="btn btn-success btn-sm">
+                            <span class="glyphicon glyphicon-euro"></span> Place Order</a>
+                            
+                        </p>
+                    </div>
+                    <br>
+                     
+
+                    <div class="col-md-6">
+                        <p class="text-right">
+                            <a href="@routes.PaymentCtrl.payment" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-flag"></span> Submit</a>
+                            
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function confirmDel() {
+                return confirm('Are you sure?');
+            }
+        </script>
+        }    

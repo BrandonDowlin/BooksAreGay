@@ -1,0 +1,59 @@
+@(users: List[models.users.User], user: models.users.User,env: play.api.Environment)
+
+@main("users",user) {
+
+<p class="lead">Users Page</p>
+<br>
+<div class="row">
+  <div class="col-sm-2">
+  </div>
+  
+  <div class="col-sm-8">
+    <table class="table table-bordered table-hover table-condensed">
+      @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+          @flash.get("success")
+        </div>
+      }
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Role</th>
+          @if(user != null){
+            @if(user.isInstanceOf[models.users.Administrator]){
+            <th colspan="2">Edit</th>
+            }
+          }      
+        </tr>
+      </thead>
+
+      <tbody>
+        @for(u<-users) {
+          <tr>
+            <td>@u.getName</td>
+            <td>@u.getEmail</td>
+            @if(user != null){
+            @if(user.isInstanceOf[models.users.Administrator]){
+            
+            <td>
+                
+              <a href="@routes.HomeController.updateUser(u.getEmail)" class="button xs btn-danger">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  
+                
+              </a>
+            </td>        <td>
+              <a href="@routes.HomeController.deleteUser(u.getEmail)" class="button xs btn-danger" onclick="return confirmDel();">
+                <span class="glyphicon glyphicon-trash"></span>
+              </a>
+            </td>
+          }
+        }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+}

@@ -1,0 +1,25 @@
+@(userForm: Form[models.users.User], user: models.users.User)
+@import helper._
+
+@main("Add User",user) {
+    <p class="lead">Join Us</p>
+    <div class="col-xs-5">
+
+    @form(action=routes.HomeController.addUserSubmit(), 
+    'class -> "form-horizontal"){
+        @* CSRF attack prevention *@
+        @CSRF.formField
+        @inputText(userForm("name"), '_label -> "Name", 'class -> "form-control")
+        @inputText(userForm("email"), '_label -> "Email", 'class -> "form-control")
+
+        @inputPassword(userForm("password"), '_label -> "Password", 'class -> "form-control")
+        
+        <div class="actions">
+            <input type="submit" value="Add User" class="btn btn-primary">
+            <a href="@routes.HomeController.usersPage()">
+                <button type="button" class="btn btn-warning">Cancel</button>
+            </a>
+        </div>
+    }
+</div>
+}

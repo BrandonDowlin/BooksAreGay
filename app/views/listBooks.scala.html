@@ -1,0 +1,94 @@
+@import models.books.Genre
+@import models.books.Book
+@import models.users.User
+@(books: List[Book], genres: List[Genre], genId: Long, filter: String,user: User,env: play.api.Environment)
+
+@main("Books",user) {
+
+    <p class="lead">Book List</p>
+    <br>
+    <div class="row">
+      <div class="col-sm-2">
+        <h4>Genres</h4>
+        <div class="list-group">
+          <a href="@routes.BookCtrl.listBooks(0, filter)" class="list-group-item">All Genres</a>
+          @for(g <- genres) {
+            <a href="@routes.BookCtrl.listBooks(g.getId, filter)" class="list-group-item">@g.getName
+              <span class="badge">@g.getBooks.size()</span>
+            </a>
+          }
+        </div>
+      </div>
+
+      <a href="@routes.AdminBookCtrl.addBook()"  class="btn btn-sm btn-primary">Add a New Book</a>
+
+      <div class="col-sm-1"></div>
+      <div class="col-sm-8">
+        @if(flash.containsKey("success")) {
+          <div class="alert alert-success">
+            @flash.get("success")
+          </div>
+        }
+  
+                    
+         
+           @for(b<-books) {
+            <div id="book-group">
+            @if(env.resource("public/images/bookImages/thumbnails/" + b.getId + ".jpg").isDefined) {
+              <td><a href="@routes.BookCtrl.bookDetails(b.getId)"><img src="/assets/images/bookImages/thumbnails/@(b.getId + ".jpg")"/></a></td>
+          } else {
+              <td><a href="@routes.BookCtrl.bookDetails(b.getId)"><img src="/assets/images/bookImages/thumbnails/noImage.jpg"/></a></td>
+          }
+          <h4 id="bookName">@b.getTitle</h4>
+          <p>
+            by @b.getAuthor.getFname @b.getAuthor.getLname
+          </p>
+          <h5 id="price">€@("%.2f".format(b.getPrice))</h5>
+          <a href="@routes.ShoppingCtrl.addToBasket(b.getId)"  class="btn btn-sm btn-primary">Add to basket &nbsp;<span class="glyphicon glyphicon-shopping-cart"></span></a><br>
+          <a href="@routes.BookCtrl.addToWishlist(b.getId)"  class="btn btn-sm btn-primary">Add to wishlist <span class="glyphicon glyphicon-heart"></span></a>
+
+           
+         </div>
+        }
+         
+         <!-- <table class="table table-bordered table-hover table-condensed">   
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Author</th>         
+                <th>Description</th>
+                <th>Publisher</th>
+                <th>Stock</th>
+                <th>Price</th>   
+              </tr>
+            </thead>
+      
+            <tbody>
+              @for(b<-books) {
+                <tr>
+                    @if(env.resource("public/images/bookImages/thumbnails/" + b.getId + ".jpg").isDefined) {
+                      <td><img src="/assets/images/bookImages/thumbnails/@(b.getId + ".jpg")"/></td>
+                  } else {
+                      <td><img src="/assets/images/bookImages/thumbnails/noImage.jpg"/></td>
+                  }
+                  <td class="numeric">@b.getId</td>
+                  <td><a href="@routes.BookCtrl.bookDetails(b.getId)">
+                      @b.getTitle</td>
+                     </a>  
+                     <td>@b.getAuthor.getFname @b.getAuthor.getLname</td>   
+                  <td>@b.getDescription</td>
+                  <td>@b.getPublisher.getName</td>
+                  <td  class="numeric">@b.getStock</td>
+                  <td  class="numeric">€ @("%.2f".format(b.getPrice))</td>
+                  <td><a href="@routes.ShoppingCtrl.addToBasket(b.getId)"  class="btn btn-default btn-xs"><span class="glyphicon glyphicon-shopping-cart"></span></a></td>
+      
+                </tr>
+              }
+            </tbody>
+      
+          </table> -->
+        </div>
+    </div>
+}

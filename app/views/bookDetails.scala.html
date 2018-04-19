@@ -1,0 +1,64 @@
+@import models.books.Genre
+@import models.books.Book
+@import models.users.User
+@(b: Book,user: User,env: play.api.Environment)
+
+
+@main("Book", user) {
+  <link href="@routes.Assets.versioned("stylesheets/main.css")" rel="stylesheet" />
+  <div class="col-sm-2"></div>
+
+  @if(flash.containsKey("success")) {
+    <div class="alert alert-success">
+      @flash.get("success")
+    </div>
+  }
+
+  <div class="col-sm-10">
+    <div class="bookDetails">
+      <div class="book-item">
+        @if(env.resource("public/images/bookImages/" + b.getId + ".jpg").isDefined) {
+            <img src="/assets/images/bookImages/@(b.getId + ".jpg")"/>
+        } else {
+            <img src="/assets/images/bookImages/noImage.jpg"/>
+        }
+        <h2>@b.getTitle</h2><br>
+        <h4>by <b>@b.getAuthor.getFname @b.getAuthor.getLname</b> | @b.getPublisher.getName</h4>
+        <br>
+        <p><b>Genre: </b> @for(g <- b.getGenres) {@g.getName}</p><br>
+        <p><b>Description</b><br>
+          @b.getDescription
+        </p><br>
+      </div>
+
+        <div class="book-price">
+          <h3 id="pricse" style="color:palevioletred">€@("%.2f".format(b.getPrice))</h3>
+          @if(user != null){
+            @if(user.isInstanceOf[models.users.Administrator]){
+              <a href="@routes.AdminBookCtrl.updateBook(b.getId)" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit </a>
+              <a href="@routes.AdminBookCtrl.deleteBook(b.getId)" class="btn btn-default btn-xs" onclick="return confirmDel()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+            } else {
+              @if(b.getStock > 0){
+                <a href="@routes.ShoppingCtrl.addToBasket(b.getId)"  class="btn btn-default btn-xs"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Basket</a>
+                <a href="@routes.BookCtrl.addToWishlist(b.getId)" class="btn btn-default btn-xs-"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</a>
+              } else {
+                <a class="btn btn-warning btn-xs"><span class="glyphicon-shopping-cart"></span>Out of Stock</a>
+                <a href="@routes.BookCtrl.addToWishlist(b.getId)" class="btn btn-default btn-xs-"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</a>
+              }
+            }
+          } else {
+            @if(b.getStock > 0) {
+              <a href="@routes.ShoppingCtrl.addToBasket(b.getId)"  class="btn btn-default btn-xs"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Basket</a>
+              <a href="@controllers.security.routes.LoginCtrl.login()" class="btn btn-default btn-xs-"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</a>
+            } else {
+              <a class="btn btn-warning btn-xs"><span class="glyphicon-shopping-cart"></span>Out of Stock</a>
+              <a href="@controllers.security.routes.LoginCtrl.login()" class="btn btn-default btn-xs-"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</a>
+            }
+          }
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+}

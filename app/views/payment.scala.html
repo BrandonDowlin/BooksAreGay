@@ -1,0 +1,89 @@
+@import models.users.User
+@import models.users.Payment
+@(paymentForm: Form[models.users.Payment], user: models.users.User)
+@import helper._
+
+@main("Payment", user) {
+    <p class="lead">Payment</p>
+    <div class="col-xs-5">
+        <h3>Process Payment</h3>
+        @if(paymentForm.hasGlobalErrors) {
+            <p class="alert alert-warning">
+                @paymentForm.globalError.message;
+            </p>
+        }
+        @if(flash.containsKey("error")) {
+            <p class="alert alert-warning">
+                @flash.get("paymentRequired")
+            </p>
+        }
+
+
+        @helper.form(action = controllers.routes.PaymentCtrl.paymentSubmit()) {
+            @CSRF.formField
+
+            <div class="form-group">
+                @inputText(paymentForm("firstName"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "First Name")
+            </div>
+            <div class="form-group">
+                @inputText(paymentForm("lastName"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "Last Name")
+            </div>
+            <div class="form-group">
+                @inputText(paymentForm("addL1"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "Address Line 1")
+            </div>
+            <div class="form-group">
+                @inputText(paymentForm("addL2"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "Address Line 2")
+            </div>
+            <div class="form-group">
+                @inputText(paymentForm("city"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "City")
+            </div>
+            <div class="form-group">
+                @inputText(paymentForm("county"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "County")
+            </div>
+            <div class="form-group">
+                @inputText(paymentForm("zipCode"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "Zip Code")
+            </div>
+            <div class="form-group">
+                @inputText(paymentForm("country"), '_label -> "", 
+                'class -> "form-control input-xs", 'placeholder -> "Country")
+            </div>
+
+            <div class="col-md-6">
+                <p class="text-right">
+                    <a href="@routes.ProcessPayCtrl.processpay()" class="btn btn-success btn-sm">
+                    <span class="glyphicon glyphicon-euro"></span> Place Order</a>
+                    
+                </p>
+            </div>
+        }
+        <form action="@routes.ShoppingCtrl.placeOrder()">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_PoB5mTsoOUvBptkhXhJX6KG4"
+              data-amount="order.getOrderTotal"
+              data-name="Bookish Universe"
+              data-description="Payment Details"
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-locale="auto"
+              data-currency="eur">
+            </script>
+          </form>
+
+          <div class="col-md-6">
+            <p class="text-right">
+                <a href="@routes.ShoppingCtrl.placeOrder()" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-euro"></span> Place Order</a>
+                
+            </p>
+        </div>
+    </div>
+    
+    
+}
